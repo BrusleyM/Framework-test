@@ -1,0 +1,17 @@
+{
+    "name": "FrameworkTest",
+    "rootNamespace": "FrameworkTest",
+    "references": [
+        "GUID:dd1074a46da09cb4a9caa6bdac537770",
+        "GUID:fef4a164c8a2fe24e98beae7fe6e1fe6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
