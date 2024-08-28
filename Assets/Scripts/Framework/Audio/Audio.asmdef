@@ -1,0 +1,16 @@
+{
+    "name": "Audio",
+    "rootNamespace": "Framework.Audio",
+    "references": [
+        "GUID:0722292db80389547a73e7bf38c3466f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

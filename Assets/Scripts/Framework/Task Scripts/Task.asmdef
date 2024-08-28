@@ -1,0 +1,19 @@
+{
+    "name": "Task",
+    "rootNamespace": "Framework.Tasks",
+    "references": [
+        "GUID:0722292db80389547a73e7bf38c3466f",
+        "GUID:a21c3d3206a75a941b801131c818d6a7",
+        "GUID:2a3e2a4585ccc8941b3cdd3af86603d6",
+        "GUID:327c12a1eba95194eaf2e56db1dfecdd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,18 @@
+{
+    "name": "Sequential",
+    "rootNamespace": "Framework.Sequential",
+    "references": [
+        "GUID:0722292db80389547a73e7bf38c3466f",
+        "GUID:fef4a164c8a2fe24e98beae7fe6e1fe6",
+        "GUID:a21c3d3206a75a941b801131c818d6a7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
