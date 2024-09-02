@@ -3,7 +3,9 @@
     "rootNamespace": "FrameworkTest",
     "references": [
         "GUID:dd1074a46da09cb4a9caa6bdac537770",
-        "GUID:fef4a164c8a2fe24e98beae7fe6e1fe6"
+        "GUID:fef4a164c8a2fe24e98beae7fe6e1fe6",
+        "GUID:0722292db80389547a73e7bf38c3466f",
+        "GUID:2a3e2a4585ccc8941b3cdd3af86603d6"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

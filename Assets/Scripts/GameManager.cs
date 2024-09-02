@@ -6,7 +6,9 @@ namespace FrameworkTest
     public class GameManager : MonoBehaviour
     {
         public enum GameMode { Guided, LetMeTry }
-        public GameMode CurrentMode { get; private set; }
+        [SerializeField]
+        private GameMode _currentMode = GameMode.Guided;
+        public GameMode CurrentMode=> _currentMode;
 
         [SerializeField]
         private SequentialTask _currentSequentialTask;
@@ -14,24 +16,24 @@ namespace FrameworkTest
         private void Start()
         {
             // Example: Start in Guided mode
-            CurrentMode = GameMode.Guided;
+            _currentMode = GameMode.Guided;
             StartSequence();
         }
 
         public void SetGameMode(GameMode mode)
         {
-            CurrentMode = mode;
+            _currentMode = mode;
         }
 
         public void StartSequence()
         {
             if (_currentSequentialTask != null)
             {
-                if (CurrentMode == GameMode.Guided)
+                if (_currentMode == GameMode.Guided)
                 {
                     _currentSequentialTask.Run();
                 }
-                else if (CurrentMode == GameMode.LetMeTry)
+                else if (_currentMode == GameMode.LetMeTry)
                 {
                     // In "Let Me Try" mode, the tasks can be started manually or with hints.
                     // For now, you can start the sequence as in guided mode,
@@ -47,7 +49,7 @@ namespace FrameworkTest
 
         public void HintButtonPressed()
         {
-            if (CurrentMode == GameMode.LetMeTry)
+            if (_currentMode == GameMode.LetMeTry)
             {
                 _currentSequentialTask?.CurrentTask?.Skip();
             }

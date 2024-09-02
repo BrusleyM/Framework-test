@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Framework.Audio;
 using Framework.CheckPoints;
-using Framework.Extensions;
 using UnityEngine;
 
 namespace Framework.Tasks
@@ -19,8 +19,6 @@ namespace Framework.Tasks
         private CheckPointsParent _enableObjects;
         [SerializeField]
         private CheckPointsParent _outlineObjects;
-        [SerializeField]
-        private LayerMask _outlineLayer;
 
         private Coroutine _reminderCoroutine;
 
@@ -42,8 +40,8 @@ namespace Framework.Tasks
             {
                 HighlightObjects();
             }
-        }
 
+        }
         public override void TaskComplete()
         {
             StopReminder();
@@ -116,17 +114,20 @@ namespace Framework.Tasks
 
         private void HighlightObjects()
         {
-            if (_outlineLayer == 0)
+            foreach (var checkpoint in _outlineObjects.CheckPoints)
             {
-                throw new InvalidOperationException("LayerMask has not been set.");
-            }
-            else
-            {
-                foreach (var checkpoint in _outlineObjects.CheckPoints)
+                var outline = checkpoint.gameObject.GetComponent<Outline>();
+                if (outline != null)
                 {
-                    checkpoint.gameObject.SetLayerRecursively(_outlineLayer);
+                    outline.EnableOutline();
                 }
+                else
+                {
+                    throw new InvalidOperationException("LayerMask has not been set.");
+                }
+
             }
+
         }
 
         private void CompleteObjectives()
