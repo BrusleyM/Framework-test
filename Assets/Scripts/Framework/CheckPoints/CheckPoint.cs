@@ -14,6 +14,7 @@ namespace Framework.CheckPoints
 
         [SerializeField]
         private UnityEvent _onChecked;
+        public UnityEvent OnChecked => _onChecked;
 
         [HideInInspector]
         public CheckPointsParent Parent;

@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Framework.Audio;
-using Framework.CheckPoints;
 using UnityEngine;
 
 namespace Framework.Tasks
@@ -16,11 +14,10 @@ namespace Framework.Tasks
         [SerializeField]
         private float _reminderInterval;
         [SerializeField]
-        private CheckPointsParent _enableObjects;
-        [SerializeField]
-        private CheckPointsParent _outlineObjects;
+        private GameObjectTask[] _subTasks;
 
         private Coroutine _reminderCoroutine;
+        private Coroutine _subTaskCoroutine;
 
         public override void StartTask()
         {
@@ -29,16 +26,14 @@ namespace Framework.Tasks
 
             PlayInstructionalAudio();
             StartReminder();
-
-            if (_enableObjects != null)
+            _subTaskCoroutine = StartCoroutine(RunSubTasks());
+        }
+        private IEnumerator RunSubTasks()
+        {
+            foreach (var task in _subTasks)
             {
-                _enableObjects.OnAllChecked.AddListener(TaskComplete);
-                EnableTaskObjectives();
-            }
-
-            if (_outlineObjects != null)
-            {
-                HighlightObjects();
+                task.Execute();
+                yield return new WaitUntil(() => task.IsComplete);
             }
 
         }
@@ -47,13 +42,23 @@ namespace Framework.Tasks
             StopReminder();
             PlayFeedbackAudio();
             IsComplete = true;
-            ResetCheckpoints();
+            //ResetCheckpoints();
         }
 
         public override void Skip()
         {
-            base.Skip();
+            StopReminder();
+            if (_audioPlayer?.IsPlaying() == true)
+            {
+                _audioPlayer.Stop();
+            }
             CompleteObjectives();
+            IsComplete = true;
+            IsDoing = false;
+            if (_feedbackAudioClip != null)
+            {
+                PlayFeedbackAudio();
+            }
         }
 
         public bool IsFeedbackAudioPlaying()
@@ -90,6 +95,14 @@ namespace Framework.Tasks
                 _reminderCoroutine = null;
             }
         }
+        private void StopSubtask()
+        {
+            if (_subTaskCoroutine != null)
+            {
+                StopCoroutine(_subTaskCoroutine);
+                _subTaskCoroutine = null;
+            }
+        }
 
         private IEnumerator ReminderRoutine()
         {
@@ -104,44 +117,61 @@ namespace Framework.Tasks
             }
         }
 
-        private void EnableTaskObjectives()
-        {
-            foreach (var checkpoint in _enableObjects.CheckPoints)
-            {
-                checkpoint.gameObject.SetActive(true);
-            }
-        }
+        //private void EnableTaskObjectives()
+        //{
+        //    foreach (var checkpoint in _enableObjects.CheckPoints)
+        //    {
+        //        checkpoint.gameObject.SetActive(true);
+        //    }
+        //}
 
-        private void HighlightObjects()
-        {
-            foreach (var checkpoint in _outlineObjects.CheckPoints)
-            {
-                var outline = checkpoint.gameObject.GetComponent<Outline>();
-                if (outline != null)
-                {
-                    outline.EnableOutline();
-                }
-                else
-                {
-                    throw new InvalidOperationException("LayerMask has not been set.");
-                }
+        //private void HighlightObjects()
+        //{
+        //    foreach (var checkpoint in _outlineObjects.CheckPoints)
+        //    {
+        //        var outline = checkpoint.gameObject.GetComponent<Outline>();
+        //        if (outline != null)
+        //        {
+        //            outline.EnableOutline();
+        //        }
+        //        else
+        //        {
+        //            throw new InvalidOperationException("LayerMask has not been set.");
+        //        }
 
-            }
+        //    }
 
-        }
+        //}
 
         private void CompleteObjectives()
         {
-            foreach (var checkpoint in _enableObjects.CheckPoints)
+            foreach (var task in _subTasks)
             {
-                checkpoint.MarkAsChecked();
+                if (task is EnableTask enableTask)
+                {
+                    enableTask.DisableGameObject(); // Disables the enabled GameObject
+                }
+
+                if (task is HighlightTask highlightTask)
+                {
+                    highlightTask.DisableOutline(); // Disables the outline effect on the GameObjects
+                }
+
+                // If there's any common completion logic, you can also invoke a method from the base class
+                //task.MarkAsComplete(); // Assuming you have a method like this in GameObjectTask
             }
         }
-
-        private void ResetCheckpoints()
+        private void OnDisable()
         {
-            _enableObjects?.ResetAllPoints();
-            _outlineObjects?.ResetAllPoints();
+            StopReminder();
+            StopSubtask();
+            //EnableTaskObjectives();
+            //HighlightObjects();
         }
+        //private void ResetCheckpoints()
+        //{
+        //    _enableObjects?.ResetAllPoints();
+        //    _outlineObjects?.ResetAllPoints();
+        //}
     }
 }

@@ -21,12 +21,11 @@ namespace FrameworkTest
         private Grounded _shoeCollider;
         [SerializeField]
         private UnityEvent _onColliderEnter;
-
-        private CharacterController controller;
+        private Rigidbody _rb;
 
         private void Awake()
         {
-            controller = GetComponent<CharacterController>();
+            _rb = GetComponent<Rigidbody>();
         }
 
         private void OnValidate()
@@ -42,10 +41,8 @@ namespace FrameworkTest
             //_playerData.Animator.SetBool("Grounded", _shoeCollider.OnGround);
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            HandleMovement();
-            HandleRotation();
             if (Input.GetKeyDown(KeyCode.R))
             {
                 speed = 50f;
@@ -54,50 +51,64 @@ namespace FrameworkTest
                 speed = 5f;
             //HandleJump();
             //UpdateAnimatorGroundedState();
+
+            
+            HandleMovement();
+            HandleRotation();
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         }
 
         private void HandleMovement()
         {
             float vertical = -Input.GetAxis("Vertical");
-            Vector3 movement = transform.forward * vertical;
-            movement = movement.normalized * speed * Time.deltaTime;
+            Vector3 movement = transform.forward * vertical * speed;
 
-            controller.Move(movement);
-            //_playerData.Animator.SetFloat("ForwardSpeed", vertical);
+            // Preserve the current vertical velocity (gravity)
+            movement.y = _rb.velocity.y;
+
+            _rb.velocity = movement;
         }
 
         private void HandleRotation()
         {
             float horizontal = Input.GetAxis("Horizontal");
-            transform.Rotate(Vector3.up, horizontal * rotationSpeedFactor * Time.deltaTime);
+
+            Vector3 rot = transform.up * horizontal * rotationSpeedFactor;
+
+            _rb.angularVelocity = rot;
         }
 
-        private void HandleJump()
-        {
-            if (Input.GetKey(KeyCode.Space) && _shoeCollider.OnGround)
-            {
-                Vector3 jumpMovement = Vector3.up * Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
-                controller.Move(jumpMovement * Time.deltaTime);
-                _shoeCollider.OnGround = false;
-                _playerData.Animator.SetFloat("VerticalSpeed", jumpForce);
-            }
-        }
 
-        private void UpdateAnimatorGroundedState()
-        {
-            // Update the Grounded state in the Animator
-            bool isGrounded = controller.isGrounded;
-            _playerData.Animator.SetBool("Grounded", isGrounded);
-        }
+        //private void HandleJump()
+        //{
+        //    if (Input.GetKey(KeyCode.Space) && _shoeCollider.OnGround)
+        //    {
+        //        Vector3 jumpMovement = Vector3.up * Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
+        //        _rb.Move(jumpMovement * Time.deltaTime);
+        //        _shoeCollider.OnGround = false;
+        //        _playerData.Animator.SetFloat("VerticalSpeed", jumpForce);
+        //    }
+        //}
+
+        //private void UpdateAnimatorGroundedState()
+        //{
+        //    // Update the Grounded state in the Animator
+        //    bool isGrounded = _rb.isGrounded;
+        //    _playerData.Animator.SetBool("Grounded", isGrounded);
+        //}
+
         private void OnCollisionEnter(Collision collision)
         {
+            Debug.Log("Collided");
             var ouliner = collision.gameObject.GetComponent<Outline>();
             var checkpoint = collision.gameObject.GetComponent<CheckPoint>();
-            if (ouliner.IsOutLined)
+
+            if (ouliner != null && ouliner.IsOutLined)
             {
                 checkpoint.MarkAsChecked();
+
                 _onColliderEnter?.Invoke();
-                
+
             }
         }
     }
