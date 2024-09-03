@@ -56,6 +56,11 @@ namespace FrameworkTest
             HandleMovement();
             HandleRotation();
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+
+            if (Input.GetKey(KeyCode.C))
+            {
+                GameManager.Instance.CurrentSequentialTask.SkipCurrentTask();
+            }
         }
 
         private void HandleMovement()

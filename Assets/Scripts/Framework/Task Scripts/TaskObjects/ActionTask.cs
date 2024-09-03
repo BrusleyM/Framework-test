@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Framework.Audio;
+using Framework.CheckPoints;
 using UnityEngine;
 
 namespace Framework.Tasks
@@ -15,15 +16,25 @@ namespace Framework.Tasks
         private float _reminderInterval;
         [SerializeField]
         private GameObjectTask[] _subTasks;
+        [SerializeField]
+        private CheckPointsParent _checkPoints;
 
         private Coroutine _reminderCoroutine;
         private Coroutine _subTaskCoroutine;
 
+        private GameObjectTask _currentSubtask;
+        public GameObjectTask CurrentSubtask=> _currentSubtask;
+
         public override void StartTask()
         {
             IsComplete = false;
-            IsDoing = true;
-
+            //IsDoing = true;
+            //get the checkpoints from gameobjects
+            foreach (var point in _checkPoints.CheckPoints)
+            {
+                point.Parent = _checkPoints;
+            }
+            _checkPoints.OnAllChecked.AddListener(TaskComplete);
             PlayInstructionalAudio();
             StartReminder();
             _subTaskCoroutine = StartCoroutine(RunSubTasks());
@@ -32,10 +43,10 @@ namespace Framework.Tasks
         {
             foreach (var task in _subTasks)
             {
+                _currentSubtask = task;
                 task.Execute();
                 yield return new WaitUntil(() => task.IsComplete);
             }
-
         }
         public override void TaskComplete()
         {
@@ -108,8 +119,9 @@ namespace Framework.Tasks
         {
             while (!IsComplete)
             {
+                Debug.Log("called Reminder");
                 yield return new WaitForSeconds(_reminderInterval);
-
+                Debug.Log("Reminder reminder should play");
                 if (!IsComplete && !IsDoing)
                 {
                     PlayInstructionalAudio();
@@ -154,7 +166,7 @@ namespace Framework.Tasks
 
                 if (task is HighlightTask highlightTask)
                 {
-                    highlightTask.DisableOutline(); // Disables the outline effect on the GameObjects
+                    highlightTask.DisableAllOutline(); // Disables the outline effect on the GameObjects
                 }
 
                 // If there's any common completion logic, you can also invoke a method from the base class

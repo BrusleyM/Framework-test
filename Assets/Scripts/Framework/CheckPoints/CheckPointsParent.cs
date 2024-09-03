@@ -5,7 +5,8 @@ using UnityEngine.Events;
 
 namespace Framework.CheckPoints
 {
-    public class CheckPointsParent : MonoBehaviour
+    [System.Serializable]
+    public class CheckPointsParent 
     {
         [SerializeField]
         private List<CheckPoint> _points;
@@ -14,14 +15,6 @@ namespace Framework.CheckPoints
 
         public List<CheckPoint> CheckPoints => _points;
         public UnityEvent OnAllChecked => _onAllChecked;
-
-        private void Awake()
-        {
-            foreach (var point in _points)
-            {
-                point.Parent = this;
-            }
-        }
 
         public void CheckAllPoints()
         {

@@ -9,12 +9,11 @@ namespace Framework.Tasks
         protected override void EnableOutline()
         {
             base.EnableOutline(); // Reuse the base implementation for enabling all outlines
-            gameObject.GetComponent<CheckPoint>().OnChecked.AddListener(() => IsComplete = true);
         }
 
         public void DisableAllOutlines()
         {
-            DisableOutline(); // Disable all outlines at once
+            DisableAllOutline(); // Disable all outlines at once
         }
     }
 }

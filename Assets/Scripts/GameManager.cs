@@ -5,19 +5,39 @@ namespace FrameworkTest
 {
     public class GameManager : MonoBehaviour
     {
+        private static GameManager _instance;
+        public static GameManager Instance=> _instance;
         public enum GameMode { Guided, LetMeTry }
         [SerializeField]
         private GameMode _currentMode = GameMode.Guided;
-        public GameMode CurrentMode=> _currentMode;
+        public GameMode CurrentMode => _currentMode;
 
         [SerializeField]
         private SequentialTask _currentSequentialTask;
+        public SequentialTask CurrentSequentialTask => _currentSequentialTask;
+        private void Awake()
+        {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                _instance = this;
+            }
+        }
 
         private void Start()
         {
             // Example: Start in Guided mode
             _currentMode = GameMode.Guided;
-            StartSequence();
+            try
+            {
+                StartSequence();
+            }
+            catch (System.Exception e) { 
+            Debug.LogException(e);
+            }
         }
 
         public void SetGameMode(GameMode mode)

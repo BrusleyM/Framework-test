@@ -1,9 +1,10 @@
 using System;
+using Framework.CheckPoints;
 using UnityEngine;
 
 namespace Framework.Tasks
 {
-    public class HighlightTask : GameObjectTask
+    public abstract class HighlightTask : GameObjectTask
     {
         [SerializeField]
         protected GameObject[] gameObjectsToHighlight;
@@ -18,12 +19,17 @@ namespace Framework.Tasks
 
         protected virtual void EnableOutline()
         {
-            foreach (var gameObject in gameObjectsToHighlight)
+            foreach (GameObject go in gameObjectsToHighlight)
             {
-                var outline = gameObject.GetComponent<Outline>();
+                var outline = go.GetComponent<Outline>();
+                
                 if (outline != null)
                 {
                     outline.EnableOutline();
+                    var checkPoint = go.GetComponent<CheckPoint>();
+
+                    checkPoint.OnChecked.AddListener(() => IsComplete = true);
+                    checkPoint.OnChecked.AddListener(() => DisableAllOutline());
                 }
                 else
                 {
@@ -32,21 +38,26 @@ namespace Framework.Tasks
             }
         }
 
-        public virtual void DisableOutline()
+        public virtual void DisableAllOutline()
         {
             foreach (var gameObject in gameObjectsToHighlight)
             {
-                var outline = gameObject.GetComponent<Outline>();
-                if (outline != null)
-                {
-                    outline.DisableOutline();
-                }
-                else
-                {
-                    throw new InvalidOperationException("Outline component not found on GameObject.");
-                }
+                DisableOutline(gameObject);
             }
             IsComplete = true;
+        }
+
+        public virtual void DisableOutline(GameObject gameObject)
+        {
+            var outline = gameObject.GetComponent<Outline>();
+            if (outline != null)
+            {
+                outline.DisableOutline();
+            }
+            else
+            {
+                throw new InvalidOperationException("Outline component not found on GameObject.");
+            }
         }
 
         public override void Execute()

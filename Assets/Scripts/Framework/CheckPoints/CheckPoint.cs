@@ -18,7 +18,6 @@ namespace Framework.CheckPoints
 
         [HideInInspector]
         public CheckPointsParent Parent;
-
         public void MarkAsChecked()
         {
             if (!_isChecked)
