@@ -21,7 +21,7 @@ namespace Framework.Sequential
         public Task CurrentTask => _currentTask;
         public bool HasRun => _hasRun;
 
-        private void Start()
+        private void OnEnable()
         {
             _audioPlayer = new AudioPlayer(_audioSource);
         }
