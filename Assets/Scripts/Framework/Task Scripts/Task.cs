@@ -32,7 +32,7 @@ namespace Framework.Tasks
             {
                 IsComplete = true;
                 IsDoing = false;
-                OnCompleteTask?.Invoke();
+                _onCompleteTask?.Invoke();
             }
         }
 

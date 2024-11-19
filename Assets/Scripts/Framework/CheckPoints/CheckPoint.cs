@@ -32,11 +32,7 @@ namespace Framework.CheckPoints
         public void ResetPoint()
         {
             _isChecked = false;
-            // Do not automatically set the gameObject active; 
-            // this can be managed externally when needed.
         }
-
-        // New method to explicitly enable the checkpoint
         public void EnableCheckPoint()
         {
             gameObject.SetActive(true);

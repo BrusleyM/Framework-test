@@ -18,12 +18,14 @@ namespace Framework.Tasks
         private GameObjectTask[] _subTasks;
         [SerializeField]
         private CheckPointsParent _checkPoints;
+        public CheckPointsParent CheckPointsParent => _checkPoints;
+
 
         private Coroutine _reminderCoroutine;
         private Coroutine _subTaskCoroutine;
 
         private GameObjectTask _currentSubtask;
-        public GameObjectTask CurrentSubtask=> _currentSubtask;
+        public GameObjectTask CurrentSubtask => _currentSubtask;
 
         public override void StartTask()
         {
@@ -53,7 +55,7 @@ namespace Framework.Tasks
             StopReminder();
             PlayFeedbackAudio();
             IsComplete = true;
-            //ResetCheckpoints();
+            // ResetCheckpoints();
         }
 
         public override void Skip()
@@ -180,10 +182,10 @@ namespace Framework.Tasks
             //EnableTaskObjectives();
             //HighlightObjects();
         }
-        //private void ResetCheckpoints()
-        //{
-        //    _enableObjects?.ResetAllPoints();
-        //    _outlineObjects?.ResetAllPoints();
-        //}
+        private void ResetCheckpoints()
+        {
+            //    _enableObjects?.ResetAllPoints();
+            //    _outlineObjects?.ResetAllPoints();
+        }
     }
 }

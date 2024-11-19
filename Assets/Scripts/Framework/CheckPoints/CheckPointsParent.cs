@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,7 +5,7 @@ using UnityEngine.Events;
 namespace Framework.CheckPoints
 {
     [System.Serializable]
-    public class CheckPointsParent 
+    public class CheckPointsParent
     {
         [SerializeField]
         private List<CheckPoint> _points;
@@ -20,6 +19,7 @@ namespace Framework.CheckPoints
         {
             if (AreAllPointsChecked())
             {
+                ResetAllPoints();
                 _onAllChecked?.Invoke();
             }
         }
