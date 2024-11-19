@@ -27,15 +27,14 @@ namespace Framework.Tasks
                 {
                     outline.EnableOutline();
                     var checkPoint = go.GetComponent<CheckPoint>();
-
-                    checkPoint.OnChecked.AddListener(() => IsComplete = true);
-                    checkPoint.OnChecked.AddListener(() => DisableAllOutline());
+                    checkPoint?.OnChecked.AddListener(() => DisableOutline(go));
                 }
                 else
                 {
                     throw new InvalidOperationException("Outline component not found on GameObject.");
                 }
             }
+            IsComplete=true;
         }
 
         public virtual void DisableAllOutline()

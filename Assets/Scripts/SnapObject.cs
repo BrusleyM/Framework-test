@@ -16,6 +16,7 @@ namespace FrameworkTest
             if (_object.name == _objectName)
             {
                 _object.transform.position = transform.position;
+                _object.transform.rotation=transform.rotation;
                 transform.GetComponent<CheckPoint>().MarkAsChecked();
             }
         }
