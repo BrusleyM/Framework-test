@@ -1,0 +1,3 @@
+[submodule "Assets/Framework Package"]
+	path = Assets/Framework Package
+	url = git@github.com:BrusleyM/Framework-package.git
