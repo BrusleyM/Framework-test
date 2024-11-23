@@ -22,19 +22,17 @@ namespace Framework.Tasks
             foreach (GameObject go in gameObjectsToHighlight)
             {
                 var outline = go.GetComponent<Outline>();
-                
+
                 if (outline != null)
                 {
                     outline.EnableOutline();
-                    var checkPoint = go.GetComponent<CheckPoint>();
-                    checkPoint?.OnChecked.AddListener(() => DisableOutline(go));
                 }
                 else
                 {
                     throw new InvalidOperationException("Outline component not found on GameObject.");
                 }
             }
-            IsComplete=true;
+            IsComplete = true;
         }
 
         public virtual void DisableAllOutline()
