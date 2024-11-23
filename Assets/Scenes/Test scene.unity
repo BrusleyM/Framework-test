@@ -184,7 +184,6 @@ MonoBehaviour:
   - {fileID: 375423386}
   _checkPoints:
     _points:
-    - {fileID: 1711805797}
     - {fileID: 1304676755}
     _onAllChecked:
       m_PersistentCalls:
@@ -218,8 +217,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2040620478}
   - {fileID: 902546332}
+  - {fileID: 2040620478}
   - {fileID: 97669619}
   - {fileID: 1265898029}
   m_Father: {fileID: 0}
@@ -566,7 +565,6 @@ GameObject:
   - component: {fileID: 692076275}
   - component: {fileID: 692076274}
   - component: {fileID: 692076278}
-  - component: {fileID: 692076280}
   - component: {fileID: 692076281}
   m_Layer: 0
   m_Name: Last
@@ -688,28 +686,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &692076280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 692076273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03feed90cd73f5444a6d8ed23b96d1cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isChecked: 0
-  _disableWhenComplete: 0
-  _onChecked:
-    m_PersistentCalls:
-      m_Calls: []
-  Parent:
-    _points: []
-    _onAllChecked:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!114 &692076281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -834,14 +810,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 697434737}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.05, y: 2.03, z: 3.32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 963194228}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &697434742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,11 +835,8 @@ MonoBehaviour:
     _health: 100
     _score: 0
     _animator: {fileID: 0}
-  speed: 5
+  speed: 3
   rotationSpeedFactor: 1000
-  jumpForce: 0.2
-  moveForce: 20
-  _shoeCollider: {fileID: 0}
   _onColliderEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -1160,6 +1133,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectName: Middle
+  _onSnapped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 712608496}
+        m_TargetAssemblyTypeName: Framework.CheckPoints.CheckPoint, Framework.CheckPoints
+        m_MethodName: MarkAsChecked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &712608496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,6 +1270,10 @@ PrefabInstance:
       propertyPath: lookAtTarget
       value: 
       objectReference: {fileID: 697434737}
+    - target: {fileID: 5723252859788503726, guid: f7541587e82c0e44c970603d3d6a399f, type: 3}
+      propertyPath: maxDistToTarget
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5723252859788503726, guid: f7541587e82c0e44c970603d3d6a399f, type: 3}
       propertyPath: locations.Array.size
       value: 1
@@ -1466,13 +1458,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9914449, z: -0.13052616, w: 0}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
   m_LocalPosition: {x: -0.05, y: 0.73300004, z: 0.25600004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 697434741}
-  m_LocalEulerAnglesHint: {x: 15, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,6 +1558,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectName: Last
+  _onSnapped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1083024348}
+        m_TargetAssemblyTypeName: Framework.CheckPoints.CheckPoint, Framework.CheckPoints
+        m_MethodName: MarkAsChecked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1083024348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1747,7 +1754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e5af40f05474548b0f3754f02bb4da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskName: 
+  _taskName: move block 3
   _onCompleteTask:
     m_PersistentCalls:
       m_Calls: []
@@ -1763,7 +1770,6 @@ MonoBehaviour:
   - {fileID: 1404141332}
   _checkPoints:
     _points:
-    - {fileID: 692076280}
     - {fileID: 1083024348}
     _onAllChecked:
       m_PersistentCalls:
@@ -1802,6 +1808,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectName: First
+  _onSnapped:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1304676755}
+        m_TargetAssemblyTypeName: Framework.CheckPoints.CheckPoint, Framework.CheckPoints
+        m_MethodName: MarkAsChecked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &1304676751
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2165,7 +2186,6 @@ GameObject:
   - component: {fileID: 1711805791}
   - component: {fileID: 1711805795}
   - component: {fileID: 1711805796}
-  - component: {fileID: 1711805797}
   m_Layer: 0
   m_Name: First
   m_TagString: Untagged
@@ -2334,28 +2354,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1711805797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1711805790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03feed90cd73f5444a6d8ed23b96d1cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isChecked: 0
-  _disableWhenComplete: 0
-  _onChecked:
-    m_PersistentCalls:
-      m_Calls: []
-  Parent:
-    _points: []
-    _onAllChecked:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!1 &1739773243 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 831615911690567710, guid: f7541587e82c0e44c970603d3d6a399f, type: 3}
@@ -2585,22 +2583,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97e5af40f05474548b0f3754f02bb4da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _taskName: Pickup cube
+  _taskName: move block 1
   _onCompleteTask:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   _instructionalAudio:
     name: instruction
     clip: {fileID: 8300000, guid: a02397b758e8ecb42aad349287cd9ece, type: 3}
@@ -2613,7 +2599,6 @@ MonoBehaviour:
   - {fileID: 1600406380}
   _checkPoints:
     _points:
-    - {fileID: 2102179265}
     - {fileID: 712608496}
     _onAllChecked:
       m_PersistentCalls:
@@ -2875,7 +2860,6 @@ GameObject:
   - component: {fileID: 2102179260}
   - component: {fileID: 2102179259}
   - component: {fileID: 2102179264}
-  - component: {fileID: 2102179265}
   m_Layer: 0
   m_Name: Middle
   m_TagString: Untagged
@@ -3018,28 +3002,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &2102179265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2102179258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03feed90cd73f5444a6d8ed23b96d1cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isChecked: 0
-  _disableWhenComplete: 0
-  _onChecked:
-    m_PersistentCalls:
-      m_Calls: []
-  Parent:
-    _points: []
-    _onAllChecked:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

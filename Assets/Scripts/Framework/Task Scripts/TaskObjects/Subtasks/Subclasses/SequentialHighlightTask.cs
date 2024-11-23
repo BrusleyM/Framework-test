@@ -20,10 +20,8 @@ namespace Framework.Tasks
                 if (outline != null)
                 {
                     outline.EnableOutline();
-                    gameObject.GetComponent<CheckPoint>().OnChecked.AddListener(()=>IsComplete = true);
-                    yield return new WaitUntil(() => gameObject.GetComponent<CheckPoint>().IsChecked);
+                    yield return new WaitUntil(() => !outline.IsOutLined);
                     IsComplete = true;
-                    outline.DisableOutline();
                 }
                 else
                 {

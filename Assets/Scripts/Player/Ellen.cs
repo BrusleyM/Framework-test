@@ -1,5 +1,3 @@
-using System;
-using Framework.CheckPoints;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,12 +11,6 @@ namespace FrameworkTest
         private float speed = 5f;
         [SerializeField]
         private float rotationSpeedFactor = 5f;
-        [SerializeField]
-        private float jumpForce = 0.2f;
-        [SerializeField]
-        private float moveForce = 1f;
-        [SerializeField]
-        private Grounded _shoeCollider;
         [SerializeField]
         private UnityEvent _onColliderEnter;
         private Rigidbody _rb;
@@ -52,7 +44,7 @@ namespace FrameworkTest
             //HandleJump();
             //UpdateAnimatorGroundedState();
 
-            
+
             HandleMovement();
             HandleRotation();
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
@@ -65,7 +57,7 @@ namespace FrameworkTest
 
         private void HandleMovement()
         {
-            float vertical = -Input.GetAxis("Vertical");
+            float vertical = Input.GetAxis("Vertical");
             Vector3 movement = transform.forward * vertical * speed;
 
             // Preserve the current vertical velocity (gravity)
@@ -105,15 +97,12 @@ namespace FrameworkTest
         private void OnCollisionEnter(Collision collision)
         {
             Debug.Log("Collided");
-            var ouliner = collision.gameObject.GetComponent<Outline>();
-            var checkpoint = collision.gameObject.GetComponent<CheckPoint>();
+            var outliner = collision.gameObject.GetComponent<Outline>();
 
-            if (ouliner != null && ouliner.IsOutLined)
+            if (outliner != null && outliner.IsOutLined)
             {
-                checkpoint.MarkAsChecked();
-
+                outliner.DisableOutline();
                 _onColliderEnter?.Invoke();
-
             }
         }
     }
